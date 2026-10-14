@@ -1,2 +1,0 @@
-# erzafcarina-wedding
-Wedding Invitation

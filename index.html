@@ -2,6 +2,7 @@
 <html lang="id">
 
 <head>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <!-- Meta Tag Preview WhatsApp -->
   <meta property="og:title" content="The Wedding of Erza & Karina" />
@@ -9,6 +10,8 @@
   <meta property="og:image" content="https://files.catbox.moe/xgsgr1.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+
+  <title>The Wedding of Erza & Karina</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -35,10 +38,13 @@
       box-sizing: border-box;
     }
 
-    body {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      overflow-x: hidden;
+      overflow-y: hidden;
       background: #ffffff;
       font-family: 'Montserrat', sans-serif;
       color: var(--secondary);
@@ -215,6 +221,38 @@
     .cover-content h1 { font-size: 38px; line-height: 1.3; margin: 25px 0; }
     .nickname { font-size: 22px; font-weight: bold; color: var(--gold); }
     .date { margin: 20px; font-size: 16px; }
+
+    /* GUEST RECIPIENT BADGE (KEPADA : ...) */
+    .guest-recipient-box {
+      display: none;
+      margin: 0 auto 22px auto;
+      padding: 12px 20px;
+      border-radius: 16px;
+      background: rgba(235, 235, 235, 0.55);
+      border: 1px solid rgba(212, 175, 55, 0.55);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+      max-width: 380px;
+    }
+
+    .guest-recipient-box.is-visible {
+      display: block;
+    }
+
+    .guest-recipient-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--secondary);
+      line-height: 1.5;
+    }
+
+    .guest-recipient-name {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-top: 2px;
+      word-break: break-word;
+    }
 
     /* BUTTONS */
     .main-btn, .next-btn, .back-btn, .send-btn {
@@ -563,6 +601,16 @@
 
     @keyframes pulse { 50% { transform: scale(1.1); } }
 
+    .container, .wrapper, section, div {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    img, svg, iframe {
+      max-width: 100%;
+      height: auto;
+    }
+
     @media (max-width: 600px) {
       .cover-content h1 { font-size: 28px; }
       .couple-box { flex-direction: column; gap: 10px; }
@@ -585,7 +633,7 @@
     <source src="https://files.catbox.moe/qya7yt.mp3" type="audio/mp3">
   </audio>
 
-  <button class="music-btn" onclick="toggleMusic()">
+  <button class="music-btn" onclick="toggleMusic()" aria-label="Toggle Musik">
     <i class="fa-solid fa-music"></i>
   </button>
 
@@ -614,8 +662,8 @@
   <!-- SLIDE CONTAINER -->
   <div id="slides">
 
-    <!-- SLIDE 1: COVER -->
-    <section class="slide active" id="cover">
+    <!-- SLIDE 1: COVER (#home) -->
+    <section class="slide active" id="cover" data-section="home">
       <div class="cover-content">
         <i class="fa-solid fa-envelope-open cover-icon"></i>
         <p class="opening">
@@ -625,6 +673,13 @@
         <h1>Muhammad Ersa Syauqy, S.H. M.Sos.<br>&<br>Icha Afcarina</h1>
         <p class="nickname">Erza & Karina</p>
         <p class="date">Ahad, 20 Desember 2026</p>
+
+        <!-- NAMA PENERIMA DINAMIS DARI PARAMETER URL (?to=...) -->
+        <div id="guestRecipientBox" class="guest-recipient-box" aria-live="polite">
+          <div class="guest-recipient-label">Kepada :</div>
+          <div id="guestRecipientName" class="guest-recipient-name"></div>
+        </div>
+
         <button class="main-btn" onclick="openInvitation()">
           <i class="fa-solid fa-heart"></i> Buka Undangan
         </button>
@@ -673,7 +728,7 @@
               <i class="fa-solid fa-location-dot"></i>
               <span>Tembokrejo, Kec. Muncar, Banyuwangi</span>
             </div>
-            
+
             <div id="akadCountdown" class="countdown-container"></div>
           </div>
         </div>
@@ -689,10 +744,10 @@
               <i class="fa-solid fa-location-dot"></i>
               <span>Kedungwungu, Tegaldlimo, Banyuwangi</span>
             </div>
-            
+
             <div id="resepsiCountdown" class="countdown-container"></div>
-            
-            <a href="https://maps.google.com/?q=Erza+Roll+Banyuwangi" target="_blank" class="map-btn">
+
+            <a href="https://maps.google.com/?q=Erza+Roll+Banyuwangi" target="_blank" rel="noopener noreferrer" class="map-btn">
               <i class="fa-solid fa-map-marker-alt"></i> Buka Lokasi
             </a>
           </div>
@@ -739,7 +794,7 @@
             <div class="wish-card">
               <strong>Mas Gibran (Hadir)</strong>
               <p>Selamat menempuh hidup baru, semoga bahagia selalu sampai kakek nenek.</p>
-            </div>  
+            </div>
             <div class="wish-card">
               <strong>Kang Wo (Hadir)</strong>
               <p>HIDUP UNTUK SEMUA HAL BAIK, Selamat zaa.</p>
@@ -753,9 +808,9 @@
           <h3>Tanda Kasih Digital</h3>
           <p class="gift-note">DANA / OVO / GoPay</p>
           <p class="gift-note">Tanpa mengurangi rasa hormat, bagi Anda yang ingin membagikan kebahagiaan dan memberikan tanda kasih, dapat melalui E-wallet berikut. Terima kasih atas perhatian dan doa terbaiknya</p>
-          
+
           <h2 id="wallet">0878-5034-9256</h2>
-          
+
           <button onclick="copyWallet()" id="copyBtn">
             <i class="fa-solid fa-copy"></i> Salin Nomor
           </button>
@@ -766,8 +821,8 @@
           <i class="fa-solid fa-paper-plane msg-icon"></i>
           <h3>Kirim Pesan Langsung</h3>
           <p class="message-note">Tanpa mengurangi rasa hormat, bagi Anda yang ingin mengirimkan pesan atau konfirmasi kehadiran secara langsung melalui WhatsApp.</p>
-          
-          <a href="https://wa.me/+6283879463716" target="_blank" id="waBtn">
+
+          <a href="https://wa.me/+6283879463716" target="_blank" rel="noopener noreferrer" id="waBtn">
             <i class="fa-brands fa-telegram"></i> Kirim Pesan
           </a>
         </div>
@@ -807,6 +862,38 @@
 
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4f_C95nLjsm5vhKDsrO1zzhoqjqe70M5cQEyp-CwpbIwTQ9_WEhbXAzLj5F0TsRIq/exec';
 
+    /* ==================================================
+       AMBIL NAMA PENERIMA DARI URL (?to=Nama+Tamu)
+       Contoh: ?to=Firda  ->  Kepada : Firda
+               ?to=Firda+Aulia#home -> Kepada : Firda Aulia
+    ================================================== */
+    function getGuestNameFromUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const rawTo = params.get("to");
+        if (!rawTo) return "";
+        return rawTo.replace(/\+/g, " ").replace(/\s+/g, " ").trim();
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function applyGuestRecipient() {
+      const guestName = getGuestNameFromUrl();
+      const box = document.getElementById("guestRecipientBox");
+      const nameEl = document.getElementById("guestRecipientName");
+      const guestInput = document.getElementById("guestName");
+
+      if (guestName && box && nameEl) {
+        nameEl.textContent = guestName;
+        box.classList.add("is-visible");
+
+        if (guestInput && !guestInput.value.trim()) {
+          guestInput.value = guestName;
+        }
+      }
+    }
+
     function openInvitation() {
       showSlide(1);
       music.play().then(() => {
@@ -818,8 +905,10 @@
 
     function showSlide(index) {
       slides.forEach(slide => slide.classList.remove("active"));
-      slides[index].classList.add("active");
-      currentSlide = index;
+      if (slides[index]) {
+        slides[index].classList.add("active");
+        currentSlide = index;
+      }
     }
 
     function nextSlide() {
@@ -836,6 +925,9 @@
 
     function restartInvitation() {
       showSlide(0);
+      if (window.location.hash === "#home") {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search + "#home");
+      }
     }
 
     function toggleMusic() {
@@ -853,9 +945,11 @@
       const timer = setInterval(() => {
         const now = new Date().getTime();
         const distance = targetDate - now;
+        const container = document.getElementById(elementId);
+        if (!container) return;
 
         if (distance < 0) {
-          document.getElementById(elementId).innerHTML = "<div style='color:var(--secondary); font-weight:bold;'>Acara Telah Dimulai</div>";
+          container.innerHTML = "<div style='color:var(--secondary); font-weight:bold;'>Acara Telah Dimulai</div>";
           clearInterval(timer);
           return;
         }
@@ -865,7 +959,7 @@
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById(elementId).innerHTML = `
+        container.innerHTML = `
           <div class="flip-box"><div class="flip-number">${days}</div><div class="flip-label">Hari</div></div>
           <div class="flip-box"><div class="flip-number">${hours}</div><div class="flip-label">Jam</div></div>
           <div class="flip-box"><div class="flip-number">${minutes}</div><div class="flip-label">Menit</div></div>
@@ -896,6 +990,7 @@
 
     function renderWishes(wishes) {
       const feed = document.getElementById("wishesFeed");
+      if (!feed) return;
       feed.innerHTML = "";
       wishes.forEach(function(item) {
         const card = document.createElement("div");
@@ -903,7 +998,7 @@
         const nama = item.nama || item.name || "Tamu";
         const status = item.kehadiran || item.status || "";
         const ucapan = item.ucapan || item.message || "";
-        
+
         const statusText = status ? ` (${escapeHtml(status)})` : "";
         card.innerHTML = `<strong>${escapeHtml(nama)}${statusText}</strong><p>${escapeHtml(ucapan)}</p>`;
         feed.appendChild(card);
@@ -921,10 +1016,9 @@
         if (!startTime) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
-        
-        // Easing function untuk gerakan yang halus
+
         const ease = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-        
+
         element.scrollTop = start + change * ease;
 
         if (timeElapsed < duration) {
@@ -938,7 +1032,7 @@
     // SEND WISH (Kirim ke Google Sheets & Animasi Bergulir Kebawah)
     function sendWish() {
       const name = document.getElementById("guestName").value.trim();
-      const status = document.getElementById("guestStatus") ? document.getElementById("guestStatus").value : 'Hadir'; 
+      const status = document.getElementById("guestStatus") ? document.getElementById("guestStatus").value : 'Hadir';
       const message = document.getElementById("guestMessage").value.trim();
 
       if (name === "" || message === "") {
@@ -947,28 +1041,23 @@
       }
 
       const feed = document.getElementById("wishesFeed");
-      
-      // Tambahkan pesan baru ke posisi paling atas
+
       const newCard = document.createElement("div");
       newCard.className = "wish-card";
       newCard.innerHTML = `<strong>${escapeHtml(name)} (${escapeHtml(status)})</strong><p>${escapeHtml(message)}</p>`;
       feed.prepend(newCard);
 
-      // Pastikan posisi scroll mulai dari atas sebelum animasi bergulir kebawah
       feed.scrollTop = 0;
 
-      // Beri sedikit jeda agar elemen baru selesai dirender, lalu gulir secara perlahan ke bawah
       setTimeout(() => {
-        smoothScrollToBottom(feed, 2500); // Durasi gulir: 2.5 detik
+        smoothScrollToBottom(feed, 2500);
       }, 300);
 
-      // Reset Form Input
       document.getElementById("guestName").value = "";
       document.getElementById("guestMessage").value = "";
 
       showModal("Terimakasih atas doa & ucapan ✨, panjang umur untuk semua hal-hal baik");
 
-      // Kirim data ke Google Spreadsheet
       fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -1016,33 +1105,12 @@
       }, 3000);
     }
 
-    window.onload = function () {
+    window.addEventListener("DOMContentLoaded", function () {
+      applyGuestRecipient();
       showSlide(0);
       loadWishes();
-    };
+    });
   </script>
-
-  <style>
-    /* Menyesuaikan lebar website agar pas di HP */
-    html, body {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 auto !important;
-      overflow-x: hidden !important;
-    }
-
-    /* Membatasi elemen pembungkus utama */
-    .container, .wrapper, section, div {
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-    }
-
-    /* Memastikan gambar & media menyesuaikan layar */
-    img, svg, iframe {
-      max-width: 100% !important;
-      height: auto !important;
-    }
-  </style>
 
 </body>
 </html>

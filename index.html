@@ -41,14 +41,15 @@
     html, body {
       width: 100%;
       max-width: 100%;
-      height: 100%;
+      min-height: 100dvh;
       margin: 0 auto;
       overflow-x: hidden;
-      overflow-y: hidden;
+      overflow-y: auto;
       background: #ffffff;
       font-family: 'Montserrat', sans-serif;
       color: var(--secondary);
       position: relative;
+      -webkit-overflow-scrolling: touch;
     }
 
     h1, h2, h3 {
@@ -66,13 +67,13 @@
        GARIS-GARIS BERGERAK DI TENGAH (ANIMATED LINES)
     ================================================== */
     .moving-lines-overlay {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 100%;
       max-width: 600px;
-      height: 100%;
+      height: 100dvh;
       pointer-events: none;
       z-index: 2;
       overflow: hidden;
@@ -109,7 +110,7 @@
        ORNAMEN POJOK ANIMASI
     ================================================== */
     .ornament {
-      position: absolute;
+      position: fixed;
       width: 140px;
       height: 140px;
       z-index: 10;
@@ -168,29 +169,29 @@
     ================================================== */
     #slides {
       width: 100%;
-      height: 100%;
+      min-height: 100dvh;
       position: relative;
       z-index: 5;
     }
 
     .slide {
-      position: absolute;
       width: 100%;
-      height: 100%;
+      min-height: 100dvh;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      overflow: hidden;
+      padding: 40px 20px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .slide.active {
       display: flex;
-      animation: fadeSlide 0.8s ease;
+      animation: fadeSlide 0.6s ease;
     }
 
     @keyframes fadeSlide {
-      from { opacity: 0; transform: scale(0.95); }
+      from { opacity: 0; transform: scale(0.97); }
       to { opacity: 1; transform: scale(1); }
     }
 
@@ -202,25 +203,27 @@
     .cover-content {
       text-align: center;
       max-width: 500px;
+      width: 100%;
       z-index: 20;
+      padding: 12px 0 28px 0;
     }
 
     .cover-icon {
-      font-size: 65px;
+      font-size: 56px;
       color: var(--gold);
-      margin-bottom: 25px;
+      margin-bottom: 18px;
       animation: floating 3s infinite;
     }
 
     @keyframes floating {
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-12px); }
     }
 
-    .opening { font-size: 14px; line-height: 1.7; margin-bottom: 25px; }
+    .opening { font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
     .cover-content h3 { font-size: 18px; }
-    .cover-content h1 { font-size: 38px; line-height: 1.3; margin: 25px 0; }
+    .cover-content h1 { font-size: 36px; line-height: 1.3; margin: 18px 0; }
     .nickname { font-size: 22px; font-weight: bold; color: var(--gold); }
-    .date { margin: 20px; font-size: 16px; }
+    .date { margin: 16px 0 20px 0; font-size: 16px; }
 
     /* GUEST RECIPIENT BADGE (KEPADA : ...) */
     .guest-recipient-box {
@@ -294,15 +297,16 @@
     .page-content {
       width: 95%;
       max-width: 900px;
-      height: 90%;
-      overflow: auto;
+      max-height: 88dvh;
+      overflow-y: auto;
       text-align: center;
-      padding: 15px;
+      padding: 20px 15px 28px 15px;
       z-index: 20;
       background: #ffffff;
       border-radius: 20px;
       border: 1px solid #f0f0f0;
       box-shadow: var(--shadow);
+      -webkit-overflow-scrolling: touch;
     }
 
     .section-icon { font-size: 36px; color: var(--gold); margin-bottom: 10px; }
@@ -587,7 +591,7 @@
 
     /* MUSIC BUTTON */
     .music-btn {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 20px;
       width: 40px;
@@ -616,7 +620,7 @@
       .couple-box { flex-direction: column; gap: 10px; }
       .person { width: 100%; }
       .divider { font-size: 22px; }
-      .page-content { height: 95%; }
+      .page-content { max-height: 90dvh; }
       .event-photo { height: 180px; }
       .flip-box { width: 52px; padding: 6px 0 4px 0; }
       .flip-number { font-size: 17px; }
@@ -662,8 +666,8 @@
   <!-- SLIDE CONTAINER -->
   <div id="slides">
 
-    <!-- SLIDE 1: COVER (#home) -->
-    <section class="slide active" id="cover" data-section="home">
+    <!-- SLIDE 1: COVER -->
+    <section class="slide active" id="cover">
       <div class="cover-content">
         <i class="fa-solid fa-envelope-open cover-icon"></i>
         <p class="opening">
@@ -864,8 +868,9 @@
 
     /* ==================================================
        AMBIL NAMA PENERIMA DARI URL (?to=Nama+Tamu)
-       Contoh: ?to=Firda  ->  Kepada : Firda
-               ?to=Firda+Aulia#home -> Kepada : Firda Aulia
+       Contoh:
+       - https://erzaf21.github.io/erzafcarina-wedding/?to=Firda
+       - https://erzaf21.github.io/erzafcarina-wedding/?to=Firda+Aulia
     ================================================== */
     function getGuestNameFromUrl() {
       try {
@@ -896,6 +901,7 @@
 
     function openInvitation() {
       showSlide(1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       music.play().then(() => {
         musicPlaying = true;
       }).catch((error) => {
@@ -908,6 +914,7 @@
       if (slides[index]) {
         slides[index].classList.add("active");
         currentSlide = index;
+        window.scrollTo({ top: 0, behavior: "instant" });
       }
     }
 
@@ -925,9 +932,6 @@
 
     function restartInvitation() {
       showSlide(0);
-      if (window.location.hash === "#home") {
-        window.history.replaceState(null, "", window.location.pathname + window.location.search + "#home");
-      }
     }
 
     function toggleMusic() {
